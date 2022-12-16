@@ -17,7 +17,6 @@ from .utils import replace_empty
 # as modules are only imported once by a streamlit app.
 counts = {"loaded_from_firestore": False}
 
-
 def reset_counts():
     # Use yesterday as first entry to make chart look better.
     yesterday = str(datetime.date.today() - datetime.timedelta(days=1))
@@ -388,7 +387,7 @@ def stop_tracking(
             print("Saving count data to firestore:")
             print(counts)
             print()
-        firestore.save(counts, firestore_key_file, firestore_collection_name)
+        firestore.save(json.loads(json.dumps(counts)), firestore_key_file, firestore_collection_name)
 
     # Dump the counts to json file if `save_to_json` is set.
     # TODO: Make sure this is not locked if writing from multiple threads.
